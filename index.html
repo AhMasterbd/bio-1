@@ -18,7 +18,8 @@ min-height:100vh;
 display:flex;
 align-items:center;
 justify-content:center;
-color:#fff
+color:#fff;
+overflow-x:hidden;
 }
 
 /* BACKGROUND (STATIC PREMIUM) */
@@ -44,7 +45,7 @@ text-align:center;
 border:1px solid rgba(99,102,241,.25)
 }
 
-/* LOGO – ONLY ANIMATION */
+/* LOGO – FLOAT ANIMATION */
 .logo span{
 font-size:44px;
 font-weight:800;
@@ -59,7 +60,7 @@ animation:logoFloat 3s ease-in-out infinite;
 50%{transform:translateY(-8px)}
 }
 
-/* AVATAR (STATIC) */
+/* AVATAR */
 .avatar{
 width:140px;
 height:140px;
@@ -84,7 +85,7 @@ margin-bottom:28px;
 font-size:14px
 }
 
-/* LINKS – PREMIUM COLORS */
+/* LINKS GRID */
 .links{
 display:grid;
 grid-template-columns:repeat(3,1fr);
@@ -99,6 +100,7 @@ text-decoration:none;
 color:#e5e7eb;
 transition:.35s;
 font-size:13px;
+text-align:center;
 }
 .link i{
 display:block;
@@ -118,28 +120,6 @@ footer{
 margin-top:26px;
 font-size:12px;
 opacity:.4
-}
-
-/* MUSIC BUTTON */
-.music{
-position:fixed;
-bottom:22px;
-right:22px;
-width:56px;
-height:56px;
-border-radius:50%;
-background:linear-gradient(135deg,#6366f1,#8b5cf6);
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:20px;
-cursor:pointer;
-color:#fff;
-z-index:999;
-transition:.3s;
-}
-.music:hover{
-transform:scale(1.1);
 }
 
 @media(max-width:600px){
@@ -163,7 +143,7 @@ transform:scale(1.1);
 </div>
 
 <div class="avatar">
-<img src="1763026669531.png"
+<img src="https://raw.githubusercontent.com/MASTER-404/bio/main/1763026669531.png"
      onerror="this.src='https://via.placeholder.com/150'"
      alt="Abdul Hakim">
 </div>
@@ -171,39 +151,48 @@ transform:scale(1.1);
 <h1>Abdul Hakim</h1>
 <p class="subtitle">Developer • Content Creator • Tech Enthusiast</p>
 
-<div class="links">
-<a class="link" href="https://facebook.com/Abdulhakimbd16" target="_blank"><i class="fab fa-facebook-f"></i>Facebook</a>
-<a class="link" href="https://instagram.com/Abdulhakimbd16" target="_blank"><i class="fab fa-instagram"></i>Instagram</a>
-<a class="link" href="https://www.tiktok.com/@abdul.hakim.69" target="_blank"><i class="fab fa-tiktok"></i>TikTok</a>
-<a class="link" href="https://www.youtube.com/@YourChannel" target="_blank"><i class="fab fa-youtube"></i>YouTube</a>
-<a class="link" href="https://github.com/master-404" target="_blank"><i class="fab fa-github"></i>GitHub</a>
-<a class="link" href="https://t.me/AbdulHakimbd0" target="_blank"><i class="fab fa-telegram"></i>Telegram</a>
-<a class="link" href="https://wa.me/9710589391569" target="_blank"><i class="fab fa-whatsapp"></i>WhatsApp</a>
-<a class="link" href="https://www.linkedin.com/in/abdul-hakim-4953b6396/" target="_blank"><i class="fab fa-linkedin"></i>LinkedIn</a>
-<a class="link" href="about.html" target="_blank"><i class="fas fa-user"></i>About Me</a>
-</div>
+<div class="links" id="linksContainer"></div>
 
 <footer>Made with ❤️ by MASTER404</footer>
-
 </div>
 
-<div class="music" id="musicBtn">
-<i class="fas fa-music"></i>
-</div>
-
-<audio id="music" loop>
-<source src="https://assets.mixkit.co/music/preview/mixkit-tech-house-vibes-130.mp3">
+<audio id="bgMusic" loop>
+<source src="https://assets.mixkit.co/music/preview/mixkit-tech-house-vibes-130.mp3" type="audio/mpeg">
 </audio>
 
 <script>
-const btn=document.getElementById("musicBtn");
-const music=document.getElementById("music");
-let play=false;
-btn.onclick=()=>{
-play?music.pause():music.play().catch(()=>{});
-btn.innerHTML=play?'<i class="fas fa-music"></i>':'<i class="fas fa-pause"></i>';
-play=!play;
-};
+// Link data
+const linksData = [
+{title:'Facebook',url:'https://facebook.com/Abdulhakimbd16',icon:'fab fa-facebook-f'},
+{title:'Instagram',url:'https://instagram.com/Abdulhakimbd16',icon:'fab fa-instagram'},
+{title:'TikTok',url:'https://www.tiktok.com/@abdul.hakim.69',icon:'fab fa-tiktok'},
+{title:'YouTube',url:'https://www.youtube.com/@HAKIMSTUDIO',icon:'fab fa-youtube'},
+{title:'GitHub',url:'https://github.com/master-404',icon:'fab fa-github'},
+{title:'Telegram',url:'https://t.me/AbdulHakimbd0',icon:'fab fa-telegram'},
+{title:'WhatsApp',url:'https://wa.me/9710589391569',icon:'fab fa-whatsapp'},
+{title:'LinkedIn',url:'https://www.linkedin.com/in/abdul-hakim-4953b6396/',icon:'fab fa-linkedin'},
+{title:'About Me',url:'about.html',icon:'fas fa-user'}
+];
+
+const container = document.getElementById('linksContainer');
+linksData.forEach(link=>{
+    const a = document.createElement('a');
+    a.href = link.url;
+    a.target='_blank';
+    a.className='link';
+    a.innerHTML=`<i class="${link.icon}"></i>${link.title}`;
+    container.appendChild(a);
+});
+
+// Auto-play music safely
+const music=document.getElementById('bgMusic');
+document.addEventListener('DOMContentLoaded',()=>{
+    music.volume=0.3;
+    const playPromise = music.play();
+    if(playPromise !== undefined){
+        playPromise.catch(()=>{}); // ignore autoplay block
+    }
+});
 </script>
 
 </body>
