@@ -1,0 +1,7 @@
+{
+  "name": "Master Notes - Keep Clone",
+  "description": "A feature-rich Google Keep clone built with React, Tailwind CSS, and TypeScript. Includes search, archiving, pinning, and real-time note management.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
